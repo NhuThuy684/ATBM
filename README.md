@@ -2,7 +2,9 @@
 Đồ án An toàn bảo mật Hệ thống thông tin
 
 Ngôn ngữ sử dụng: Oracle + Winform C#
+
 Quy mô thành viên: 2 thành viên.
+
 Nội dung:
     PHÂN HỆ 1: DÀNH CHO NGƯỜI QUẢN TRỊ NGƯỜI DÙNG VÀ ĐIỀU KHIỂN TRUY
     CẬP
