@@ -1,0 +1,116 @@
+﻿--Cai dat cac quyen cho bang thong bao
+--Quanli duoc xem, them, xoa, sua bang thong bao
+grant select,insert, update,delete on THONGBAO to BAN_TO_CHUC,GIAM_SAT,THEO_DOI;
+--Tat ca nhan vien chi duoc xem bang thong bao
+grant select on THONGBAO to public;
+--select * from THONGBAO;
+
+---------Tao chinh sach moi OLS duoc cap mac dinh LBACSYS
+-- Kich hoat tai khoan lbacsys (Tai khoan nay thuc thi cac goi chinh sach OLS) 
+alter user LBACSYS account unlock identified by "123456";
+--Kich hoat OLS cho schema muon ap dung chinh sach bao mat OLS 
+-- Áp dung co che OLS cho instant/lugin DB (nhung chua kich hoat). 
+exec LBACSYS.configure_ols;   
+-- Kích hoat chinh sach OLS vua ap dung. 
+exec LBACSYS.ols_enforcement.enable_ols; 
+--Tao user quan li ols
+
+begin 
+  sa_sysdba.create_policy(
+  policy_name => 'ACCESS_ThongBao',
+  column_name => 'ols_col');
+end;
+--Khi chinh sach tao ra, orcl tao 1 role quan tri
+--grant quyen cho QLTK quan ly nhung chinh sach bao mat
+grant ACCESS_ThongBao_DBA to QLBBTN; --cho phep QLTK truy cap vao chinh sach
+grant execute on sa_components to QLBBTN; --Package dung de dinh nghia va quan li cac thanh phan cua nhan
+grant execute on sa_label_admin to QLBBTN; --Package dung de thuc hien thao tac quan tri chinh sach, nhan
+grant execute on sa_policy_admin to QLBBTN; --Package dung de gan chinh sach cho cac table/schema
+grant execute on sa_user_admin to QLBBTN; -- Package dung de dan cac label cho user
+grant execute on char_to_label to QLBBTN;
+--Tao level
+execute sa_components.create_level('ACCESS_ThongBao',1000,'TT','ThongThuong');
+execute sa_components.create_level('ACCESS_ThongBao',2000,'GH','GioiHan');
+execute sa_components.create_level('ACCESS_ThongBao',3000,'BM','BiMat');
+
+--Tao compartment
+execute sa_components.create_compartment('ACCESS_ThongBao',200,'TV','ThanhVien');
+execute sa_components.create_compartment('ACCESS_ThongBao',300,'BTC','BanToChuc');
+
+--Tao group
+execute sa_components.create_group('ACCESS_ThongBao',30,'TV','THANHVIEN','NULL');
+execute sa_components.create_group('ACCESS_ThongBao',40,'GS','GiamSat','NULL');
+
+--Tao label
+execute sa_label_admin.create_label('ACCESS_ThongBao',2230,'GH::TV::TV');
+execute sa_label_admin.create_label('ACCESS_ThongBao',3340,'BM::BTC::GS');
+execute sa_label_admin.create_label('ACCESS_ThongBao',1240,'TT::TV::GS');
+execute sa_label_admin.create_label('ACCESS_ThongBao'1330,,'TT::BTC::TV');
+execute sa_label_admin.create_label('ACCESS_ThongBao'2240,,'GH::TV::GS');
+execute sa_label_admin.create_label('ACCESS_ThongBao'1230,,'TT::TV::TV');
+
+
+
+-- gan chinh sach cho bang
+begin
+sa_policy_admin.apply_table_policy
+(policy_name => 'ACCESS_ThongBao',
+schema_name => 'QLBBTN',
+table_name => 'ThongBao',
+table_options => 'NO_CONTROL');
+end;
+
+----gan chinh sach len cac table hoac schema muon bao ve
+begin 
+  sa_policy_admin.remove_table_policy(
+  policy_name  => 'ACCESS_ThongBao',
+  schema_name  => 'QLBBTN',
+  table_name  => 'ThongBao');
+     
+  sa_policy_admin.apply_table_policy(
+  policy_name  => 'ACCESS_ThongBao',
+  schema_name  => 'QLBBTN',
+  table_name  => 'ThongBao',
+  table_options  => 'READ_CONTROL,WRITE_CONTROL,CHECK_CONTROL');
+end;
+
+-- gan chinh sach cho cac du lieu
+update THONGBAO 
+set ols_column = char_to_label('ACCESS_ThongBao', 'TT::TV::GS')
+where THONGBAO.MA_THONGBAO = 'TB001';
+
+update THONGBAO 
+set ols_col = char_to_label('ACCESS_ThongBao', 'BM::BTC::GS,TT::TV::GS,TT::BTC::TV') 
+where ThongBao.MaTB = 'TB002';
+
+
+
+--gan quyen nguoi dung theo cac yeu cau cua label
+begin
+  sa_user_admin.set_user_labels
+  (policy_name => 'ACCESS_ThongBao',
+  user_name => 'GS3110',
+  max_read_label => 'TT::TV::GS');
+end;
+  
+begin
+  sa_user_admin.set_user_labels
+  (policy_name => 'ACCESS_ThongBao',
+  user_name => 'BTC1111',
+  max_read_label => 'TT::BTC::TV');
+end;
+
+begin
+  sa_user_admin.set_user_labels
+  (policy_name => 'ACCESS_ThongBao',
+  user_name => 'GS3111',
+  max_read_label => 'GH::TV::GS');
+end;
+
+begin
+  sa_user_admin.set_user_labels
+  (policy_name => 'ACCESS_ThongBao',
+  user_name => 'TVOO3',
+  max_read_label => 'TT::TV::TV');
+end;
+

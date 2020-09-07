@@ -1,0 +1,1020 @@
+﻿grant dba to QLBBTN with admin option;
+grant connect to QLBBTN;
+grant all privileges to QLBBTN;
+grant create session to QLBBTN with admin option;
+
+--TAO BANG:
+CREATE TABLE CHINHANH
+(
+  MACHINHANH NVARCHAR2(8),
+  TENCHINHANH NVARCHAR2(50),
+  CONSTRAINT PK_CHINHANH PRIMARY KEY(MACHINHANH)
+);
+--DROP TABLE CHINHANH
+--CASCADE CONSTRAINTS;
+
+CREATE TABLE THANHVIEN
+(
+  MA_THANHVIEN  NVARCHAR2(8),
+  HOTEN NVARCHAR2(50),
+  GIOITINH NVARCHAR2(5),
+  QUEQUAN NVARCHAR2(20),
+  NAMSINH NUMBER(4),
+  QUOCTICH NVARCHAR2(20),
+  DC_THUONGTRU NVARCHAR2(100),
+  DC_TAMTRU NVARCHAR2(100),
+  DONVI  NVARCHAR2(8),
+  CHINHANH  NVARCHAR2(8),
+  CONGTAC NVARCHAR2(255),
+  TAMNGHI NVARCHAR2(255),
+  LUONG NUMBER(10),
+  CONSTRAINT PK_THANHVIEN PRIMARY KEY(MA_THANHVIEN)
+);
+--DROP TABLE THANHVIEN
+--CASCADE CONSTRAINTS;
+
+CREATE TABLE DONVI
+(
+  MA_DONVI  NVARCHAR2(8),
+  TENDONVI NVARCHAR2(50),
+  TRUONGDONVI  NVARCHAR2(8),
+  CONSTRAINT PK_DONVI PRIMARY KEY(MA_DONVI)
+);
+--DROP TABLE DONVI
+--CASCADE CONSTRAINTS;
+
+CREATE TABLE BTC
+(
+  ID_BTC  NVARCHAR2(8),
+  HOTEN NVARCHAR2(50),
+  NAMSINH NUMBER(4),
+  GIOITINH NVARCHAR2(5),
+  CONSTRAINT PK_BTC PRIMARY KEY(ID_BTC)
+);
+--DROP TABLE BTC
+--CASCADE CONSTRAINTS;
+
+CREATE TABLE PHIEUBAU
+(
+  MA_THANHVIEN  NVARCHAR2(8),
+  UCV1  NVARCHAR2(8),
+  UCV2  NVARCHAR2(8),
+  UCV3  NVARCHAR2(8),
+  CONSTRAINT PK_PHIEUBAU PRIMARY KEY(MA_THANHVIEN)
+);
+--DROP TABLE PHIEUBAU
+--CASCADE CONSTRAINTS;
+
+CREATE TABLE TO_LAP
+(
+  ID_TOLAP  NVARCHAR2(8),
+  HOTEN NVARCHAR2(50),
+  NAMSINH NUMBER(4),
+  GIOITINH NVARCHAR2(5),
+  DONVI  NVARCHAR2(8),
+  CONSTRAINT PK_TOLAP PRIMARY KEY(ID_TOLAP)
+);
+--DROP TABLE TO_LAP
+--CASCADE CONSTRAINTS;
+
+CREATE TABLE GIAMSAT 
+(
+  ID_GIAMSAT  NVARCHAR2(8),
+  HOTEN NVARCHAR2(50),
+  NAMSINH NUMBER(4),
+  GIOITINH NVARCHAR2(5),
+  CONSTRAINT PK_GIAMSAT PRIMARY KEY(ID_GIAMSAT)
+);
+--DROP TABLE GIAMSAT
+--CASCADE CONSTRAINTS;
+
+CREATE TABLE THONGBAO
+(
+  MA_THONGBAO NVARCHAR2(8),
+  NOIDUNG NVARCHAR2(100),
+  LOAITB NVARCHAR2(20),
+  COLUMN_OLS NVARCHAR2(10)
+);
+ALTER TABLE THONGBAO
+ADD CONSTRAINT PK_THONGBAO PRIMARY KEY(MA_THONGBAO);
+
+--DROP TABLE THONGBAO
+--CASCADE CONSTRAINTS;
+
+CREATE TABLE THEODOI
+(
+  ID_THEODOI  NVARCHAR2(8),
+  HOTEN NVARCHAR2(50),
+  NAMSINH NUMBER(4),
+  GIOITINH NVARCHAR2(5),
+  CONSTRAINT PK_THEODOI PRIMARY KEY(ID_THEODOI)
+);
+
+--DROP TABLE THEODOI
+--CASCADE CONSTRAINTS;
+
+CREATE TABLE UNGCUVIEN
+(
+  MA_UCV  NVARCHAR2(8),
+  HOTEN NVARCHAR2(50),
+  NAMSINH NUMBER(4),
+  CHUCVU NVARCHAR2(30),
+  KHOA NVARCHAR2(30),
+  CONSTRAINT PK_UCV PRIMARY KEY(MA_UCV)
+);
+--DROP TABLE UNGCUVIEN
+--CASCADE CONSTRAINTS;
+----------------------------------------------------------------------
+----------------------------------------------------------------------
+
+--INSERT DỮ LIỆU
+--Bảng CHINHANH:
+INSERT INTO CHINHANH(MACHINHANH, TENCHINHANH)
+VALUES('CN1001', 'Quận 1');
+INSERT INTO CHINHANH(MACHINHANH, TENCHINHANH)
+VALUES('CN1002', 'Quận 2');
+INSERT INTO CHINHANH(MACHINHANH, TENCHINHANH)
+VALUES('CN1003', 'Quận 3');
+INSERT INTO CHINHANH(MACHINHANH, TENCHINHANH)
+VALUES('CN1004', 'Tân Bình');
+INSERT INTO CHINHANH(MACHINHANH, TENCHINHANH)
+VALUES('CN1005', 'Quận 5');
+INSERT INTO CHINHANH(MACHINHANH, TENCHINHANH)
+VALUES('CN1006', 'Bình Thạnh');
+--select* from CHINHANH
+
+
+--SELECT* FROM DONVI;
+--Bảng DONVI:
+INSERT INTO DONVI (MA_DONVI, TENDONVI, TRUONGDONVI)
+VALUES ('DV3001', 'Phòng kinh doanh', 'TV002');
+INSERT INTO DONVI (MA_DONVI, TENDONVI, TRUONGDONVI)
+VALUES ('DV3002', 'SALE', 'TV006');
+INSERT INTO DONVI (MA_DONVI, TENDONVI, TRUONGDONVI)
+VALUES ('DV3003', 'MAKETING', 'TV003');
+INSERT INTO DONVI (MA_DONVI, TENDONVI, TRUONGDONVI)
+VALUES ('DV3004', 'CÔNG ĐOÀN', 'TV005');
+INSERT INTO DONVI (MA_DONVI, TENDONVI, TRUONGDONVI)
+VALUES ('DV3005', 'GIÁM ĐÓC', 'TV001');
+
+--Bảng THANHVIEN:
+INSERT INTO THANHVIEN(MA_THANHVIEN, 
+                      HOTEN, 
+                      GIOITINH, 
+                      QUEQUAN, 
+                      NAMSINH, 
+                      QUOCTICH, 
+                      DC_THUONGTRU, 
+                      DC_TAMTRU, 
+                      DONVI, 
+                      CHINHANH, 
+                      CONGTAC, 
+                      TAMNGHI, 
+                      LUONG)
+VALUES('TV001', 'Nguyễn Mỹ Lan', 'Nữ', 'Kiên Giang', 1985,'Việt Nam'
+      , '1250 Trần Hưng Đạo, quận 5, TP.HCM'
+      , '125 Trần Hưng Đạo, quận 5, TP.HCM'
+      ,'DV3001', 'CN1001', 'quận 1, TP.HCM', '', 12500000);
+      
+
+INSERT INTO THANHVIEN(MA_THANHVIEN, 
+                      HOTEN, 
+                      GIOITINH, 
+                      QUEQUAN, 
+                      NAMSINH, 
+                      QUOCTICH, 
+                      DC_THUONGTRU, 
+                      DC_TAMTRU, 
+                      DONVI, 
+                      CHINHANH, 
+                      CONGTAC, 
+                      TAMNGHI, 
+                      LUONG)
+VALUES('TV002', 'Nguyễn Minh Luân', 'Nam', 'Tiền Giang', 1980,'Việt Nam'
+      , 'h154 Châu Thành, Tiền Giang'
+      , '276 Lý Thái Tổ, quận 1, TP.HCM'
+      ,'DV3002', 'CN1001', 'quận 1, TP.HCM', NULL, 12500000);
+      
+INSERT INTO THANHVIEN(MA_THANHVIEN, 
+                      HOTEN, 
+                      GIOITINH, 
+                      QUEQUAN, 
+                      NAMSINH, 
+                      QUOCTICH, 
+                      DC_THUONGTRU, 
+                      DC_TAMTRU, 
+                      DONVI, 
+                      CHINHANH, 
+                      CONGTAC, 
+                      TAMNGHI, 
+                      LUONG)
+VALUES('TV003', 'Nuyễn Văn Ba', 'Nam', 'TP.HCM', 1980,'Việt Nam'
+      , '276 Lý Thái Tổ, quận 1, TP.HCM'
+      , '276 Lý Thái Tổ, quận 1, TP.HCM'
+      ,'DV3003', 'CN1003', 'quận 1, TP.HCM', NULL, 10500000);
+      
+INSERT INTO THANHVIEN(MA_THANHVIEN, 
+                      HOTEN, 
+                      GIOITINH, 
+                      QUEQUAN, 
+                      NAMSINH, 
+                      QUOCTICH, 
+                      DC_THUONGTRU, 
+                      DC_TAMTRU, 
+                      DONVI, 
+                      CHINHANH, 
+                      CONGTAC, 
+                      TAMNGHI, 
+                      LUONG)
+VALUES('TV004', 'Phạm Quang Tuấn', 'Nam', 'TP.HCM', 1990,'Việt Nam'
+      , '876 Trần Hưng Đạo, quận 5, TP.HCM'
+      , '276 Lý Thái Tổ, quận 1, TP.HCM'
+      ,'DV3003', 'CN1004', NULL, 'TẠM NGHỈ VÌ BỆNH', 1600000);
+
+INSERT INTO THANHVIEN(MA_THANHVIEN, 
+                      HOTEN, 
+                      GIOITINH, 
+                      QUEQUAN, 
+                      NAMSINH, 
+                      QUOCTICH, 
+                      DC_THUONGTRU, 
+                      DC_TAMTRU, 
+                      DONVI, 
+                      CHINHANH, 
+                      CONGTAC, 
+                      TAMNGHI, 
+                      LUONG)
+VALUES('TV005', 'Tống Anh Hoa', 'Nữ', 'Lâm Đồng', 1980,'Việt Nam'
+      , '976, Cai Lậy, Tiền Giang'
+      , '198 Kha Vạn Cân, quận Thủ Đức, TP.HCM'
+      ,'DV3004', 'CN1004', 'quận Thủ Đức, TP.HCM', NULL, 9000000);
+      
+INSERT INTO THANHVIEN(MA_THANHVIEN, 
+                      HOTEN, 
+                      GIOITINH, 
+                      QUEQUAN, 
+                      NAMSINH, 
+                      QUOCTICH, 
+                      DC_THUONGTRU, 
+                      DC_TAMTRU, 
+                      DONVI, 
+                      CHINHANH, 
+                      CONGTAC, 
+                      TAMNGHI, 
+                      LUONG)
+VALUES('TV006', 'Trần Mỹ Anh Vũ', 'Nữ', 'Hà Nội', 1989,'Việt Nam'
+      , '546, Cầu Giấy, Hà Nội'
+      , '125 D1, quận Bình Thạnh, TP.HCM'
+      ,'DV3004', 'CN1004', NULL, 'NGHỈ HỘ SẢN', 12000000);
+     
+     INSERT INTO THANHVIEN(MA_THANHVIEN, 
+                      HOTEN, 
+                      GIOITINH, 
+                      QUEQUAN, 
+                      NAMSINH, 
+                      QUOCTICH, 
+                      DC_THUONGTRU, 
+                      DC_TAMTRU, 
+                      DONVI, 
+                      CHINHANH, 
+                      CONGTAC, 
+                      TAMNGHI, 
+                      LUONG)
+VALUES('TV007', 'Vũ Minh Mẫn', 'Nam', 'TP.HCM', 1993,'Việt Nam'
+      , '456 Nguyễn Văn Cừ, quận 5, TP.HCM'
+      , '456 Nguyễn Văn Cừ, quận 5, TP.HCM'
+      ,'DV3004', 'CN1005', 'quận 5, TP.HCM', NULL, 20000000);
+  UPDATE THANHVIEN SET DONVI='DV3004', CHINHANH='CN1005' WHERE MA_THANHVIEN='TV007';
+INSERT INTO THANHVIEN(MA_THANHVIEN, 
+                      HOTEN, 
+                      GIOITINH, 
+                      QUEQUAN, 
+                      NAMSINH, 
+                      QUOCTICH, 
+                      DC_THUONGTRU, 
+                      DC_TAMTRU, 
+                      DONVI, 
+                      CHINHANH, 
+                      CONGTAC, 
+                      TAMNGHI, 
+                      LUONG)
+VALUES('TV008', 'Trần Minh Cao', 'Nam', 'Đồng Tháp', 1988,'Việt Nam'
+      , '746 Cách Mạng tháng 8, quận 10, TP.HCM'
+      , '75 Lý Thái Tổ, quận 1, TP.HCM'
+      ,'DV3005', 'CN1006',' quận 1, TP.HCM', NULL, 25000000);
+      
+INSERT INTO THANHVIEN(MA_THANHVIEN, HOTEN, GIOITINH, QUEQUAN, NAMSINH, QUOCTICH, DC_THUONGTRU, DC_TAMTRU, DONVI, CHINHANH, CONGTAC, TAMNGHI, LUONG)
+VALUES('TV009', 'Trần Minh Thiện', 'Nam', 'Hậu Giang', 1984,'Việt Nam'
+      , '746 Dường 3 tháng 2, quận 10, TP.HCM'
+      , '75 Lý Thái Tổ, quận 1, TP.HCM'
+      ,'DV3005', 'CN1006',' quận 1, TP.HCM', NULL, 25000000);
+      
+        
+INSERT INTO THANHVIEN(MA_THANHVIEN, HOTEN, GIOITINH, QUEQUAN, NAMSINH, QUOCTICH, DC_THUONGTRU, DC_TAMTRU, DONVI, CHINHANH, CONGTAC, TAMNGHI, LUONG)
+VALUES('TV010', 'Nguyễn Minh Châu', 'Nam', 'Quảng Ngãi', 1994,'Việt Nam'
+      , '22 An Mô, Mộ Đức, Quảng Ngãi'
+      , '11 Lê Ngô Cát, quận 3, TP.HCM'
+      ,'DV3003', 'CN1001',' quận 1, TP.HCM', NULL, 2000000);
+      
+        
+INSERT INTO THANHVIEN(MA_THANHVIEN, 
+                      HOTEN, 
+                      GIOITINH, 
+                      QUEQUAN, 
+                      NAMSINH, 
+                      QUOCTICH, 
+                      DC_THUONGTRU, 
+                      DC_TAMTRU, 
+                      DONVI, 
+                      CHINHANH, 
+                      CONGTAC, 
+                      TAMNGHI, 
+                      LUONG)
+VALUES('TV011', 'Phan Thành Thi', 'Nam', 'ĐăkLăk', 1998,'Việt Nam'
+      , '72, EaKuawng, Krông Păc, ĐăkLăk'
+      , '75 Lý Thái Tổ, quận 1, TP.HCM'
+      ,'DV3005', 'CN1006',' quận 1, TP.HCM', NULL, 12000000);
+        
+INSERT INTO THANHVIEN(MA_THANHVIEN, 
+                      HOTEN, 
+                      GIOITINH, 
+                      QUEQUAN, 
+                      NAMSINH, 
+                      QUOCTICH, 
+                      DC_THUONGTRU, 
+                      DC_TAMTRU, 
+                      DONVI, 
+                      CHINHANH, 
+                      CONGTAC, 
+                      TAMNGHI, 
+                      LUONG)
+VALUES('TV012', 'Nguyễn Anh Thư', 'Nữ', 'Hà Nội', 1977,'Việt Nam'
+      , '746 Cách Mạng tháng Tám, quận Ba Đình, Hà Nội'
+      , '135 Trần Hưng Đạo, quận 1, TP.HCM'
+      ,'DV3002', 'CN1004',' quận 5, TP.HCM', NULL, 15000000);
+  
+INSERT INTO THANHVIEN(MA_THANHVIEN, 
+                      HOTEN, 
+                      GIOITINH, 
+                      QUEQUAN, 
+                      NAMSINH, 
+                      QUOCTICH, 
+                      DC_THUONGTRU, 
+                      DC_TAMTRU, 
+                      DONVI, 
+                      CHINHANH, 
+                      CONGTAC, 
+                      TAMNGHI, 
+                      LUONG)
+VALUES('TV013', 'Hoàng Ngọc Long', 'Nam', 'Quảng Bình', 1992,'Việt Nam'
+      , '46 Hoàng Diệu, quận Thủ Đức, TP.HCM'
+      , '114 Huỳnh Mẫn Đạt, TP.HCM'
+      ,'DV3003', 'CN1006',NULL, 'nghỉ phép', 25000000); 
+      
+        
+INSERT INTO THANHVIEN(MA_THANHVIEN, HOTEN, GIOITINH, QUEQUAN,  NAMSINH, QUOCTICH, DC_THUONGTRU, DC_TAMTRU, DONVI, CHINHANH, CONGTAC, TAMNGHI,  LUONG)
+VALUES('TV014', 'Trần Minh An', 'Nam', 'Vĩnh Long', 1985,'Việt Nam'
+      , '67 Tân Lập, Hòa Thắng, Hòa Bình, Vĩnh Long'
+      , '112 Cao Thắng, quận 4, TP.HCM'
+      ,'DV3005', 'CN1001',' quận 1, TP.HCM', NULL, 30000000);
+      
+        
+INSERT INTO THANHVIEN(MA_THANHVIEN, HOTEN,GIOITINH, QUEQUAN, NAMSINH,QUOCTICH,DC_THUONGTRU,  DC_TAMTRU, DONVI, CHINHANH,CONGTAC,TAMNGHI,  LUONG)
+VALUES('TV015', 'Hồ Thanh Nga', 'Nữ', 'HCM', 1991,'Việt Nam'
+      , '746 Hoàng Hoa Thám, quận Tân Bình, TP.HCM'
+      , '746 Hoàng Hoa Thám, quận Tân Bình, TP.HCM'
+      ,'DV3002', 'CN1004',' quận 1, TP.HCM', NULL, 25000000);
+      
+      INSERT INTO THANHVIEN(MA_THANHVIEN,  HOTEN,GIOITINH,QUEQUAN,  NAMSINH, QUOCTICH,  DC_THUONGTRU,DC_TAMTRU,DONVI, CHINHANH, CONGTAC, TAMNGHI,  LUONG)
+VALUES('TV016', 'Hoàng Kim Thoa', 'Nữ', 'HCM', 1991,'Việt Nam'
+      , '12 Phan Văn Đối, quận 12, TP.HCM'
+      , '12 Phan Văn Đối, quận 12, TP.HCM'
+      ,'DV3005', 'CN1004',' quận 1, TP.HCM', NULL, 15000000);
+      
+      INSERT INTO THANHVIEN(MA_THANHVIEN, HOTEN, GIOITINH, QUEQUAN,  NAMSINH,QUOCTICH,DC_THUONGTRU,DC_TAMTRU,DONVI,CHINHANH, CONGTAC,TAMNGHI,LUONG)
+VALUES('TV017', 'Trần Cao Việt', 'Nam', 'HCM', 1991,'Việt Nam'
+      , ' 135 Trần Hưng Đạo, quận 1, TP.HCM'
+      , '135 Trần Hưng Đạo, quận 1, TP.HCM'
+      ,'DV3003', 'CN1004',' quận 1, TP.HCM', NULL, 12000000);
+      
+      INSERT INTO THANHVIEN(MA_THANHVIEN, HOTEN,GIOITINH, QUEQUAN,NAMSINH, QUOCTICH, DC_THUONGTRU, DC_TAMTRU,DONVI, CHINHANH, CONGTAC, TAMNGHI, LUONG)
+VALUES('TV018', 'Lý Quang Thắng', 'Nam', 'HCM', 1983,'Việt Nam'
+      , '1152 Trường Chinh, quận Tân Bình, TP.HCM'
+      , '1152 Trường Chinh, quận Tân Bình, TP.HCM'
+      ,'DV3002', 'CN1005',' quận 5, TP.HCM', NULL, 12000000);
+      
+      
+      INSERT INTO THANHVIEN(MA_THANHVIEN, HOTEN, GIOITINH, QUEQUAN,  NAMSINH, QUOCTICH, DC_THUONGTRU, DC_TAMTRU, DONVI, CHINHANH, CONGTAC, TAMNGHI,  LUONG)
+VALUES('TV019', 'Hồ Quang Trung', 'Nam', 'Vĩnh Long', 1987,'Việt Nam'
+      , '85 Thăng Lập, Bình Minh, Hòa Bình, Vĩnh Long'
+      , '112 Khánh Hội, quận 4, TP.HCM'
+      ,'DV3005', 'CN1003',' quận 5, TP.HCM', NULL, 20000000);
+      
+      INSERT INTO THANHVIEN(MA_THANHVIEN, HOTEN, GIOITINH, QUEQUAN,  NAMSINH, QUOCTICH, DC_THUONGTRU, DC_TAMTRU, DONVI, CHINHANH, CONGTAC, TAMNGHI,  LUONG)
+VALUES('TV020', 'Nguyễn Bảo Trân', 'Nữ', 'An Giang', 1995,'Việt Nam'
+      , '12 Lý Chính Thắng, quận 1, HCM'
+      , '12 lý Chính Thắng, quận 1, TP.HCM'
+      ,'DV3001', 'CN1006',' quận 1, TP.HCM', NULL, 30000000);
+      
+
+      
+--Bảng BTC:
+INSERT INTO BTC(ID_BTC, HOTEN, NAMSINH, GIOITINH)
+VALUES('BTC1110', 'Trần Minh Cao', 1988, 'Nam');
+INSERT INTO BTC(ID_BTC, HOTEN, NAMSINH, GIOITINH)
+VALUES('BTC1111', 'Vũ Bạch Huệ', 1980, 'Nữ');
+INSERT INTO BTC(ID_BTC, HOTEN, NAMSINH, GIOITINH)
+VALUES('BTC1112', 'Lê Minh Vỹ', 1985, 'Nam');
+INSERT INTO BTC(ID_BTC, HOTEN, NAMSINH, GIOITINH)
+VALUES('BTC1113', 'Trần Thị Mỹ Huyền', 1988, 'Nữ');
+
+--Bảng PHIEUBAU:
+
+
+--Bảng UCV:
+INSERT INTO UNGCUVIEN (MA_UCV, HOTEN, NAMSINH, CHUCVU, KHOA)
+VALUES('U4001', 'Vũ Minh Mẫn', 1993,'Nhân viên', 'K12');
+INSERT INTO UNGCUVIEN (MA_UCV, HOTEN, NAMSINH, CHUCVU, KHOA)
+VALUES('U4002', 'Nguyễn Hữu Nghìn', 1990,'Trưởng phòng KD', 'K9');
+INSERT INTO UNGCUVIEN (MA_UCV, HOTEN, NAMSINH, CHUCVU, KHOA)
+VALUES('U4003', 'Nguyễn Hải Đào', 1987,'Nhân viên', 'K6');
+INSERT INTO UNGCUVIEN (MA_UCV, HOTEN, NAMSINH, CHUCVU, KHOA)
+VALUES('U4004', 'Nguyễn Minh Thư', 1991,'Thư kí', 'K10');
+INSERT INTO UNGCUVIEN (MA_UCV, HOTEN, NAMSINH, CHUCVU, KHOA)
+VALUES('U4005', 'Phạm Quang Tuấn', 1990,'Trưởng công đoàn', 'K12');
+
+--Bảng TO_LAP:
+INSERT INTO TO_LAP(ID_TOLAP, HOTEN, NAMSINH, GIOITINH)
+VALUES('TL2110', 'Trần Cao Minh', 1980, 'Nam');
+INSERT INTO TO_LAP(ID_TOLAP, HOTEN, NAMSINH, GIOITINH)
+VALUES('TL2111', 'Vũ An Nam', 1984, 'Nam');
+INSERT INTO TO_LAP(ID_TOLAP, HOTEN, NAMSINH, GIOITINH)
+VALUES('TL2112', 'Lê Minh Vỹ', 1985, 'Nam');
+INSERT INTO TO_LAP(ID_TOLAP, HOTEN, NAMSINH, GIOITINH)
+VALUES('TL2113', 'Trần Thị My', 1988, 'Nữ');
+
+--Bảng GIAMSSAT:
+INSERT INTO GIAMSAT(ID_GIAMSAT, HOTEN, NAMSINH, GIOITINH)
+VALUES('GS3110', 'Vũ Hải Anh', 1988, 'Nam');
+INSERT INTO GIAMSAT(ID_GIAMSAT, HOTEN, NAMSINH, GIOITINH)
+VALUES('GS3111', 'Lê An Tiên', 1981, 'Nữ');
+INSERT INTO GIAMSAT(ID_GIAMSAT, HOTEN, NAMSINH, GIOITINH)
+VALUES('GS3112', 'Trần Văn Lê', 1975, 'Nam');
+INSERT INTO GIAMSAT(ID_GIAMSAT, HOTEN, NAMSINH, GIOITINH)
+VALUES('GS3113', 'Lê Bảo Anh', 1976, 'Nữ');
+
+--Bảng THEODOI:
+INSERT INTO THEODOI(ID_THEODOI, HOTEN, NAMSINH, GIOITINH)
+VALUES('TD4110', 'Nguyễn Hải Hà', 1990, 'Nam');
+INSERT INTO THEODOI(ID_THEODOI, HOTEN, NAMSINH, GIOITINH)
+VALUES('TD4111', 'Nguyễn Văn Bo', 1989, 'Nữ');
+INSERT INTO THEODOI(ID_THEODOI, HOTEN, NAMSINH, GIOITINH)
+VALUES('TD4112', 'Nguyễn Bảo Lâm', 1985, 'Nam');
+INSERT INTO THEODOI(ID_THEODOI, HOTEN, NAMSINH, GIOITINH)
+VALUES('TD4113', 'Nguyễn Thị Xuân', 1992, 'Nữ');
+
+--Bảng THONGBAO:
+INSERT INTO THONGBAO(MA_THONGBAO, NOIDUNG, LOAITB, COLUMN_OLS)
+VALUES ('TB001','Thông báo kết quả','Lần 1','2');
+INSERT INTO THONGBAO(MA_THONGBAO, NOIDUNG, LOAITB, COLUMN_OLS)
+VALUES ('TB002','Thông báo thời gian','Sau 1 giờ','3');
+INSERT INTO THONGBAO(MA_THONGBAO, NOIDUNG, LOAITB, COLUMN_OLS)
+VALUES ('TB003','Thông báo PUBLIC','PUBLIC','1');
+
+--TẠO KHÓA NGOẠI:
+--BẢNG THANHVIEN
+ALTER TABLE THANHVIEN
+ADD CONSTRAINT FK_THANHVIEN_CHINHANH
+FOREIGN KEY (CHINHANH)
+REFERENCES CHINHANH(MACHINHANH);
+
+ALTER TABLE THANHVIEN
+ADD CONSTRAINT FK_THANHVIEN_DONVI
+FOREIGN KEY (DONVI)
+REFERENCES DONVI(MA_DONVI);
+
+--BẢNG DONVI
+ALTER TABLE DONVI
+ADD CONSTRAINT FK_DONVI_THANHVIEN
+FOREIGN KEY (TRUONGDONVI)
+REFERENCES THANHVIEN(MA_THANHVIEN);
+
+--BẢNG PHIEUBAU:
+ALTER TABLE PHIEUBAU
+ADD CONSTRAINT FK_PHIEUBAU_THANHVIEN
+FOREIGN KEY (MA_THANHVIEN)
+REFERENCES THANHVIEN(MA_THANHVIEN);
+
+ALTER TABLE PHIEUBAU
+ADD CONSTRAINT FK_PHIEUBAU_UNGCUVIEN1
+FOREIGN KEY (UCV1)
+REFERENCES UNGCUVIEN(MA_UCV);
+
+ALTER TABLE PHIEUBAU
+ADD CONSTRAINT FK_PHIEUBAU_UNGCUVIEN2
+FOREIGN KEY (UCV2)
+REFERENCES UNGCUVIEN(MA_UCV);
+
+ALTER TABLE PHIEUBAU
+ADD CONSTRAINT FK_PHIEUBAU_UNGCUVIEN3
+FOREIGN KEY (UCV3)
+REFERENCES UNGCUVIEN(MA_UCV);
+
+--BẢNG TO_LAP:
+ALTER TABLE TO_LAP
+ADD CONSTRAINT FK_TOLAP_DONVI
+FOREIGN KEY (DONVI)
+REFERENCES DONVI(MA_DONVI);
+
+----------------------------------------------------------------------------------------------
+---------------------------------TẠO USER/ROLE----------------------------------------------
+
+ALTER SESSION SET "_ORACLE_SCRIPT"=true;
+------------------ Tao user ---------------------
+CREATE USER TV001 IDENTIFIED BY 123456;
+GRANT CREATE SESSION TO TV001;
+CREATE USER TV002 IDENTIFIED BY 123456;
+GRANT CREATE SESSION TO TV002;
+CREATE USER TV003 IDENTIFIED BY 123456;
+GRANT CREATE SESSION TO TV003;
+CREATE USER TV004 IDENTIFIED BY 123456;
+GRANT CREATE SESSION TO TV004;
+CREATE USER TV005 IDENTIFIED BY 123456;
+GRANT CREATE SESSION TO TV005;
+CREATE USER TV006 IDENTIFIED BY 123456;
+GRANT CREATE SESSION TO TV006;
+CREATE USER TV007 IDENTIFIED BY 123456;
+GRANT CREATE SESSION TO TV007;
+CREATE USER TV008 IDENTIFIED BY 123456;
+GRANT CREATE SESSION TO TV008;
+CREATE USER TV009 IDENTIFIED BY 123456;
+GRANT CREATE SESSION TO TV009;
+CREATE USER TV010 IDENTIFIED BY 123456;
+GRANT CREATE SESSION TO TV010;
+CREATE USER TV011 IDENTIFIED BY 123456;
+GRANT CREATE SESSION TO TV011;
+CREATE USER TV012 IDENTIFIED BY 123456;
+GRANT CREATE SESSION TO TV012;
+CREATE USER TV013 IDENTIFIED BY 123456;
+GRANT CREATE SESSION TO TV013;
+CREATE USER TV014 IDENTIFIED BY 123456;
+GRANT CREATE SESSION TO TV014;
+CREATE USER TV015 IDENTIFIED BY 123456;
+GRANT CREATE SESSION TO TV015;
+CREATE USER TV016 IDENTIFIED BY 123456;
+GRANT CREATE SESSION TO TV016;
+CREATE USER TV017 IDENTIFIED BY 123456;
+GRANT CREATE SESSION TO TV017;
+CREATE USER TV018 IDENTIFIED BY 123456;
+GRANT CREATE SESSION TO TV018;
+CREATE USER TV019 IDENTIFIED BY 123456;
+GRANT CREATE SESSION TO TV019;
+CREATE USER TV020 IDENTIFIED BY 123456;
+GRANT CREATE SESSION TO TV020;
+
+----
+CREATE USER BTC1110 IDENTIFIED BY 123456;
+GRANT CREATE SESSION TO BTC1110;
+CREATE USER BTC1111 IDENTIFIED BY 123456;
+GRANT CREATE SESSION TO BTC1111;
+CREATE USER BTC1112 IDENTIFIED BY 123456;
+GRANT CREATE SESSION TO BTC1112;
+CREATE USER BTC1113 IDENTIFIED BY 123456;
+GRANT CREATE SESSION TO BTC1113;
+
+----
+CREATE USER TL2110 IDENTIFIED BY 123456;
+GRANT CREATE SESSION TO TL2110;
+CREATE USER TL2111 IDENTIFIED BY 123456;
+GRANT CREATE SESSION TO TL2111;
+CREATE USER TL2112 IDENTIFIED BY 123456;
+GRANT CREATE SESSION TO TL2112;
+CREATE USER TL2113 IDENTIFIED BY 123456;
+GRANT CREATE SESSION TO TL2113;
+
+----
+CREATE USER TD4110 IDENTIFIED BY 123456;
+GRANT CREATE SESSION TO TD4110;
+CREATE USER TD4111 IDENTIFIED BY 123456;
+GRANT CREATE SESSION TO TD4111;
+CREATE USER TD4112 IDENTIFIED BY 123456;
+GRANT CREATE SESSION TO TD4112;
+CREATE USER TD4113 IDENTIFIED BY 123456;
+GRANT CREATE SESSION TO TD4113;
+
+---
+CREATE USER GS3110 IDENTIFIED BY 123456;
+GRANT CREATE SESSION TO GS3110;
+CREATE USER GS3111 IDENTIFIED BY 123456;
+GRANT CREATE SESSION TO GS3111;
+CREATE USER GS3112 IDENTIFIED BY 123456;
+GRANT CREATE SESSION TO GS3112;
+CREATE USER GS3113 IDENTIFIED BY 123456;
+GRANT CREATE SESSION TO GS3113;
+
+----
+CREATE USER U4001 IDENTIFIED BY 123456;
+GRANT CREATE SESSION TO U4001;
+CREATE USER U4002 IDENTIFIED BY 123456;
+GRANT CREATE SESSION TO U4002;
+CREATE USER U4003 IDENTIFIED BY 123456;
+GRANT CREATE SESSION TO U4003;
+CREATE USER U4004 IDENTIFIED BY 123456;
+GRANT CREATE SESSION TO U4004;
+CREATE USER U4005 IDENTIFIED BY 123456;
+GRANT CREATE SESSION TO U4005;
+
+------------------ -----Tao role ---------------------
+CREATE ROLE THANHVIEN;
+CREATE ROLE BAN_TO_CHUC;
+CREATE ROLE TRUONG_BTC;
+CREATE ROLE TO_LAP;
+CREATE ROLE THEO_DOI;
+CREATE ROLE GIAM_SAT;
+CREATE ROLE UNG_CU_VIEN;
+ 
+ ---TRUONG BAN TO CHUC---
+GRANT BAN_TO_CHUC TO BTC1110, BTC1111, BTC1112, BTC1113;
+GRANT TRUONG_BTC TO BTC1110;
+
+---TO_LAP---
+GRANT TO_LAP TO TL2110, TL2111, TL2112, TL2113;
+
+--THEO_DOI---
+GRANT THEO_DOI TO TD4110, TD4111, TD4112, TD4113;
+
+--GIAM_SAT--
+GRANT GIAM_SAT TO GS3110, GS3111, GS3112, GS3113;
+
+--UNG_CU_VIEN---
+GRANT UNG_CU_VIEN TO U4001, U4002, U4003, U4004, U4005;
+
+-------------------------------------CAP QUYEN CHO ROLE---------------------
+--GRANT CHO QLBBTN
+grant dba to QLBBTN;
+grant all privileges to QLBBTN;
+grant THANHVIEN to QLBBTN;
+grant BAN_TO_CHUC to QLBBTN;
+grant TRUONG_BTC to QLBBTN;
+grant TO_LAP to QLBBTN;
+grant THEO_DOI to QLBBTN;
+grant GIAM_SAT to QLBBTN;
+grant UNG_CU_VIEN to QLBBTN;
+
+-------------------------------------------------------------------------------------------------------------
+------------------------------------------------PHÂN HỆ 1------------------------------------------------
+--1.1 Xem danh sách các user
+select  username from DBA_USERS where account_status = 'OPEN';
+
+-- Xem danh sách các table cua user hien hành:
+select  table_name  from all_tables  where  owner = 'QLBBTN';
+
+--Xem danh sách ROLE da cai dat:
+select  role from  DBA_ROLES  where  common = 'YES';
+
+-- 1.2 Them user, role,...
+--Cho phép them, xóa, sua (hieu chinh) user hoac role. 
+CREATE USER TV021 IDENTIFIED BY 123456;
+
+CREATE ROLE GIAM_SAT1;
+
+-- 1.3 Phan/lay quyen cua user:
+GRANT SELECT ON THANHVIEN TO TV001;
+REVOKE SELECT ON THANHVIEN FROM TV001;
+
+GRANT SELECT ON CHINHANH TO TV002 WITH GRANT OPTION;
+REVOKE SELECT ON CHINHANH FROM TV002;
+
+-- Phan/lay quyen cua role:
+GRANT SELECT ON THANHVIEN TO BAN_TO_CHUC;
+REVOKE SELECT ON THANHVIEN FROM BAN_TO_CHUC;
+GRANT INSERT ON THANHVIEN TO BAN_TO_CHUC WITH GRANT OPTION;
+
+--1.4 Xem quyen cua mot doi tuong cu the:
+select grantee, table_name, privilege from USER_TAB_PRIVS where grantee= 'BAN_TO_CHUC';
+
+--------------------------------------------------------------------------------------------------------------
+-----------------------------------------------PHÂN HỆ 2--------------------------------------------------
+------------------------------------------------RBAC + DAC-----------------------------------------------
+--- Truong ban to chuc có quyen thêm, xem, xóa, sua bang Ung cu vien:
+GRANT INSERT, SELECT,DELETE,UPDATE ON UNGCUVIEN TO TRUONG_BTC;
+
+--- Ban to chuc có quyen xem, xóa, sua thông tin trong bang UNGCUVIEN, TO_LAP, THEODOI, GIAMSAT:
+GRANT SELECT,DELETE,UPDATE ON UNGCUVIEN TO BAN_TO_CHUC;
+GRANT SELECT,DELETE,UPDATE ON TO_LAP TO BAN_TO_CHUC;
+GRANT SELECT,DELETE,UPDATE ON THEODOI TO BAN_TO_CHUC;
+GRANT SELECT,DELETE,UPDATE ON GIAMSAT TO BAN_TO_CHUC;
+
+---Bo phan giám sát toàn quyen xem du lieu trên he thong
+GRANT SELECT ON THANHVIEN TO GIAM_SAT;
+GRANT SELECT ON BTC TO GIAM_SAT;
+GRANT SELECT ON UNGCUVIEN TO GIAM_SAT;
+GRANT SELECT ON TO_LAP TO GIAM_SAT;
+GRANT SELECT ON THEODOI TO GIAM_SAT;
+GRANT SELECT ON GIAMSAT TO GIAM_SAT;
+GRANT SELECT ON CHINHANH TO GIAM_SAT;
+GRANT SELECT ON THONGBAO TO GIAM_SAT;
+GRANT SELECT ON DONVI TO GIAM_SAT;
+
+-------------To theo doi ket qua-------------- 
+----------Xem danh sách thành viên di bau------
+CREATE VIEW XEM_TV_DI_BAU AS
+SELECT TV.*,DVI.TENDONVI
+FROM THANHVIEN TV, DONVI DVI
+WHERE TV.TAMNGHI=NULL AND TV.DONVI=DVI.MA_DONVI;
+
+---------Xem danh sách nhung nguoi da bau-----
+CREATE VIEW XEM_TV_DA_BAU AS
+SELECT TV.MA_THANHVIEN,TV.HOTEN
+FROM THANHVIEN TV,PHIEUBAU PB
+WHERE TV.MA_THANHVIEN=PB.MA_THANHVIEN;
+
+--------Xem danh sách nhung nguoi chua bau----
+CREATE VIEW XEM_TV_CHUA_BAU AS
+SELECT TV.MA_THANHVIEN,TV.HOTEN
+FROM THANHVIEN TV,PHIEUBAU PB
+WHERE TV.MA_THANHVIEN!=PB.MA_THANHVIEN;
+
+-----Xem danh sách so lan bau cu cua thành viên---
+CREATE VIEW XEM_SO_LAN_BAU AS
+SELECT TV.MA_THANHVIEN,TV.HOTEN, COUNT(PB.MA_THANHVIEN) AS SOLANBAU
+FROM THANHVIEN TV, PHIEUBAU PB
+WHERE TV.MA_THANHVIEN=PB.MA_THANHVIEN
+GROUP BY TV.MA_THANHVIEN,TV.HOTEN;
+
+----------------------------------------VPD------------------------------------------------------------
+--Thanh vien chi duoc xem luong cua chinh bang than minh:
+--DROP FUNCTION FUNCTION_TOLAP;
+CREATE OR REPLACE FUNCTION FUNCTION_LUONG_THANHVIEN(
+  p_schema varchar2,
+  p_obj varchar2 )
+  return varchar2
+as
+  user varchar2(100);
+Begin 
+    if (SYS_CONTEXT('userenv', 'SESSION_USER') = 'QLBBTN')
+        then return '';
+    else    
+        user := SYS_CONTEXT('userenv', 'SESSION_USER');
+        return 'MA_THANHVIEN = ' || 'user';
+    end if;
+End;
+
+BEGIN dbms_rls.add_policy 
+(object_schema =>'QLBBTN',
+object_name => 'THANHVIEN',
+policy_name => 'POLICY2',
+function_schema => 'QLBBTN',
+policy_function => 'FUNCTION_LUONG_THANHVIEN',
+statement_types => 'SELECT',
+sec_relevant_cols=>'LUONG',
+sec_relevant_cols_opt=>dbms_rls.ALL_ROWS);
+END;
+
+--SELECT FUNCTION_LUONG_THANHVIEN('QLBBTN','THANHVIEN') PREDICATE FROM DUAL;
+--begin DBMS_RLS.DROP_POLICY('QLBBTN', 'THANHVIEN', 'XemDiaChi'); end;
+GRANT SELECT ON THANHVIEN TO TV001;
+GRANT SELECT ON THANHVIEN TO TV002;
+GRANT SELECT ON THANHVIEN TO TV003;
+GRANT SELECT ON THANHVIEN TO TV004;
+GRANT SELECT ON THANHVIEN TO TV005;
+GRANT SELECT ON THANHVIEN TO TV006;
+GRANT SELECT ON THANHVIEN TO TV007;
+GRANT SELECT ON THANHVIEN TO TV008;
+GRANT SELECT ON THANHVIEN TO TV009;
+GRANT SELECT ON THANHVIEN TO TV010;
+GRANT SELECT ON THANHVIEN TO TV011;
+GRANT SELECT ON THANHVIEN TO TV012;
+GRANT SELECT ON THANHVIEN TO TV013;
+GRANT SELECT ON THANHVIEN TO TV014;
+GRANT SELECT ON THANHVIEN TO TV015;
+GRANT SELECT ON THANHVIEN TO TV016;
+GRANT SELECT ON THANHVIEN TO TV017;
+GRANT SELECT ON THANHVIEN TO TV018;
+GRANT SELECT ON THANHVIEN TO TV019;
+GRANT SELECT ON THANHVIEN TO TV020;
+
+-------------------------------------------------AUDIT-----------------------------------------------
+alter system set audit_trail=none scope=spfile; --enable audit
+shutdown immediate;
+startup
+alter system set audit_trail=db,extended scope=spfile; -- disable audit
+
+----Thuc hien cau lenh Audit: 
+audit select,insert,update, delete on THANHVIEN by access;
+audit select,insert,update, delete on CHINHANH by access;
+audit select,insert,update, delete on DONVI by access;
+audit select,insert,update, delete on BTC by access;
+audit select,insert,update, delete on PHIEUBAU by access;
+audit select,insert,update, delete on TO_LAP by access;
+audit select,insert,update, delete on GIAMSAT by access;
+audit select,insert,update, delete on THEODOI by access;
+audit select,insert,update, delete on THONGBAO by access;
+audit select,insert,update, delete on UNGCUVIEN by access;
+
+---Giam sat truy van thanh cong:
+audit update on PHIEUBAU by access WHENEVER SUCCESSFUL;
+
+---Giam sat truy van co loi:
+audit update on DONVI by access WHENEVER NOT SUCCESSFUL;
+
+----Kiem tra ket qua Audit:
+SELECT username,extended_timestamp,obj_name,action_name FROM dba_audit_trail ;
+
+-----------------------------------------------MA HOA--------------------------------------------
+-- Nhan vien nao thi moi duoc xem dia chi cua nguoi do
+-- Ma hoa cot dia chi
+-- Tao moi bang de luu dia chi nhan vien, gia tri key, dia chi duoc ma hoa
+create table MaTV_Key
+(
+  MA_THANHVIEN nvarchar2(10),
+  Key RAW(255),
+  DiaChi_CongTacMH RAW(255),
+  DiaChi_CongTac nvarchar2(255),
+  primary key(MA_THANHVIEN)
+);
+
+--drop table MaTV_Key;
+-- Copy MA_THANHVIEN, CONGTAC o bang THANHVIEN vao bang MaNV_Key
+insert into MaTV_Key(MA_THANHVIEN,DiaChi_CongTac)
+VALUES('TV001','qu?n 1, TP.HCM');
+insert into MaTV_Key(MA_THANHVIEN,DiaChi_CongTac)
+VALUES('TV002','qu?n 1, TP.HCM');
+
+-- Function ma hoa, giai ma, lay key tu du lieu da ma hoa
+create or replace package crypt_util as
+function crypt (p_str in nvarchar2, p_key in raw) return raw;
+function decrypt (p_data in raw, p_key in raw) return nvarchar2;
+function get_key return raw;
+end crypt_util;
+
+create or replace package body crypt_util  
+as         
+    --- ma hoa
+    function crypt (p_str in nvarchar2, p_key in raw)  
+         return raw  
+    as  
+        l_data    nvarchar2(255);  
+        l_datar   raw(255);  
+        l_retval  raw(255); 
+    begin  
+        l_data := rpad(p_str, (trunc(length(p_str)/8)+1)*8, chr(0));  
+        l_datar := utl_raw.cast_to_raw(l_data);  
+        dbms_obfuscation_toolkit.des3encrypt  (
+            input => l_datar, 
+            key => p_key, 
+            which => dbms_obfuscation_toolkit.ThreeKeyMode,  
+            encrypted_data => l_retval);  
+            return l_retval;  
+    end;  
+    
+    --- lay key ma hoa
+    function get_key  
+        return raw  
+    as  
+        l_keyr  raw(255);  
+        l_seed  nvarchar2(255);  
+        l_seedr raw(255);  
+    begin  
+        l_seed :=  'UpKYrZHeiooBqkvpJHuImXrLOmVzYhgBhJcNLQL'||'wkKYAhKgoZKnXPDBjcgYPGnfPyQOBAGmtRTJUhXAo';          
+        l_seedr := utl_raw.cast_to_raw(l_seed);  
+        dbms_obfuscation_toolkit.des3GetKey (
+            which => dbms_obfuscation_toolkit.ThreeKeyMode,  
+            seed => l_seedr,  
+            key => l_keyr );  
+            return l_keyr;  
+    end;  
+    
+    --- giai ma
+    function decrypt (p_data in raw, p_key in raw)  
+        return nvarchar2  
+    as  
+        l_data  nvarchar2(255);  
+        l_datar raw(255);  
+    begin  
+        l_datar := dbms_obfuscation_toolkit.des3decrypt  
+                         (input => p_data,  
+                          key => p_key,  
+                          which => dbms_obfuscation_toolkit.ThreeKeyMode);  
+        return (substr(utl_raw.cast_to_nvarchar2(l_datar), 1, instr(utl_raw.cast_to_nvarchar2(l_datar),chr(0),1)-1));  
+    end; 
+end crypt_util;
+
+----- MA NGUON: Tao ham cursor luu key va luu DiaChi_CongTac duoc ma hoa
+-- Khai báo mot Cursor có 2 tham so
+Declare
+   Cursor MH
+   (p_Dept_Id Number, p_Branch_Id Number) Is
+       Select MA_THANHVIEN,DIACHI_CONGTAC
+       From   MaTV_Key;
+       
+   ---
+   -- Khai báo mot kieu ROWTYPE dua trên Cursor vua tao.
+   v_temp MH%Rowtype;
+   --
+   l raw(255);
+   v_Dept_Id Number := 1;
+   v_Branch_Id Number;
+   --
+   v_Row Integer := 0;
+   v_Open Boolean;
+Begin
+   -- Kiem tra xem cursor mo chua
+   If MH%Isopen Then
+       Dbms_Output.Put_Line('Cursor opened');
+   Else
+       Dbms_Output.Put_Line('Cursor not open');
+   End If;
+   --
+   Dbms_Output.Put_Line('Opening cursor...');
+   -- Mo Cursor (Truyen các giá tri tham so vào)
+   Open MH(v_Dept_Id, v_Branch_Id);
+   -- Su dung vong lap.
+   Loop
+       -- Lay dong du lieu trên Cursor
+       -- Moi lan Fetch con tro nhay lên 1 dong
+       -- (Tu trên xuong duoi)
+       Fetch MH
+           Into v_temp;
+       -- Dieu kien thoat khoi vong lap    
+       Exit When MH%Notfound;
+       -- S? l? du lieu
+       v_Row := v_Row + 1;
+        l := crypt_util.get_key;
+         update MaTV_Key set Key=l where MA_THANHVIEN=v_temp.MA_THANHVIEN;
+         update MaTV_Key set DIACHI_CONGTACMH = crypt_util.crypt(diachi_congtac,l) where MA_THANHVIEN=v_temp.MA_THANHVIEN;
+   End Loop;
+   --
+   Dbms_Output.Put_Line('Closing cursor...');
+   -- Ðóng Cursor.
+   Close MH;
+End;
+
+--- Test
+select * from MaTV_Key;
+select * from THANHVIEN;
+---
+
+--- Tao bang luu key cua nhan vien
+create table Save_Key
+(
+  MA_THANHVIEN nvarchar2(10),
+  Key RAW(255),
+  primary key (MA_THANHVIEN)
+);
+--DROP TABLE  SAVE_KEY ;
+select MA_THANHVIEN,Key FROM MaTV_Key;
+
+-- Copy MA_THANHVIEN, Key o bang MaNTV_Key vao bang MaTV_Key
+insert into Save_Key(MA_THANHVIEN, Key)
+values('TV001', '1DC2F95B06834DC34E7879841DACB0A38DF982852D6C0431');
+insert into Save_Key(MA_THANHVIEN, Key)
+values('TV002', 'E2CCADDBDB4AE823C91E0500BDA9EC28E98FCC117F1FB4DF');
+
+
+
+-- Update cot CONGTAC o bang THANHVIEN thanh gia tri da ma hoa va xoa bang MaTV_Key
+update THANHVIEN a
+set a.CONGTAC= (select b.DIACHI_CONGTACMH from MaTV_Key b where a.MA_THANHVIEN = b.MA_THANHVIEN);
+
+--drop table MaTV_Key;
+--- Test
+select * from THANHVIEN; 
+select * from Save_Key;
+---
+
+-- Tao view de nguoi dang nhap duoc xem dia chi da ma hoa cua ho
+create or replace view  view_nhanviengiaima as 
+    select n.MA_THANHVIEN, n.HOTEN, n.DONVI, CAST (crypt_util.decrypt(n.CONGTAC, m.Key) AS nvarchar2 (255)) DiaChiGiaiMa
+    from THANHVIEN n, Save_Key m 
+    where n.MA_THANHVIEN = m.MA_THANHVIEN;
+
+--- Test
+select * from view_nhanviengiaima;
+---
+-- Function lay MA_THANHVIEN cua nguoi dang nhap de thuc hien giai ma tren view
+create or replace function F_GetUser
+(p_schema nvarchar2 default null, p_obj nvarchar2 default null)
+ return nvarchar2
+ AS
+ user nvarchar2(20);
+BEGIN
+  user := SYS_CONTEXT('userenv', 'SESSION_USER');
+  return 'MA_THANHVIEN = ''' || user || '''';
+END;
+
+-- Ham policy chi cho nhan vien xem duoc dia chi cua chinh minh
+BEGIN dbms_rls.add_policy
+(          object_schema        => 'QLBBTN', 
+           object_name          => 'view_nhanviengiaima', 
+           policy_name          => 'XemDiaChi', 
+           function_schema      => 'QLBBTN', 
+           policy_function      => 'F_GetUser', 
+           statement_types      => 'SELECT',
+           sec_relevant_cols    => 'DiaChiGiaiMa',
+           sec_relevant_cols_opt => dbms_rls.ALL_ROWS,
+           update_check         => TRUE
+);
+END;
+grant select on view_nhanviengiaima to TV001;
+grant select on view_nhanviengiaima to TV002;
