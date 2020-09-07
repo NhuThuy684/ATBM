@@ -6,6 +6,7 @@ Ngôn ngữ sử dụng: Oracle + Winform C#
 Quy mô thành viên: 2 thành viên.
 
 Nội dung:
+
     PHÂN HỆ 1: DÀNH CHO NGƯỜI QUẢN TRỊ NGƯỜI DÙNG VÀ ĐIỀU KHIỂN TRUY
     CẬP
     Sinh viên hãy xây dựng ứng dụng cho phép các người dùng có quyền quản trị thực hiện công việc
